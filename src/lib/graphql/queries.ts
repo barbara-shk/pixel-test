@@ -1,4 +1,6 @@
 import { gql } from "@apollo/client";
+import { apolloClient } from "@/src/lib/apollo-client"; 
+import { GetTaskListQuery } from "@/src/lib/generated/graphql";
 
 // Public task list (from API)
 export const GET_TASK_LIST = gql`
@@ -53,3 +55,17 @@ export const LOGIN_MUTATION = gql`
     }
   }
 `;
+
+
+export async function getTaskList() {
+  try {
+    const { data } = await apolloClient.query<GetTaskListQuery>({
+      query: GET_TASK_LIST,
+      fetchPolicy: "no-cache",
+    });
+    return data?.taskList || [];
+  } catch (error) {
+    console.error("Error fetching tasks:", error);
+    return [];
+  }
+}

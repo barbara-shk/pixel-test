@@ -1,24 +1,10 @@
-import { apolloClient } from "@/src/lib/apollo-client";
-import { GET_TASK_LIST } from "@/src/lib/graphql/queries";
-import { GetTaskListQuery } from "../lib/generated/graphql";
+
 import { TaskList } from "./components/TaskList";
 import { Header } from "./components/Header";
-
-async function getTasks() {
-  try {
-    const { data } = await apolloClient.query<GetTaskListQuery>({
-      query: GET_TASK_LIST,
-      fetchPolicy: "no-cache",
-    });
-    return data?.taskList || [];
-  } catch (error) {
-    console.error("Error fetching tasks:", error);
-    return [];
-  }
-}
+import { getTaskList } from "@/src/lib/graphql/queries";
 
 export default async function HomePage() {
-  const tasks = await getTasks();
+  const tasks = await getTaskList();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
