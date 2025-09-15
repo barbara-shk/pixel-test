@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { apolloClient } from "@/src/lib/apollo-client"; 
+import { apolloClient } from "@/src/lib/apollo-client";
 import { GetTaskListQuery } from "@/src/lib/generated/graphql";
 
 // Public task list (from API)
@@ -55,7 +55,6 @@ export const LOGIN_MUTATION = gql`
     }
   }
 `;
-
 
 export async function getTaskList() {
   try {
