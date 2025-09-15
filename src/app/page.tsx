@@ -1,13 +1,31 @@
-import Link from 'next/link';
-import { mockTasks } from './mock';
+import { apolloClient } from '@/lib/apollo-client';
+import { GET_TASK_LIST } from '@/lib/graphql/queries';
+import { GetTaskListQuery, Task } from '../../lib/generated/graphql';
+
  
 const statusConfig = {
-  NEW: { bg: 'bg-emerald-100', text: 'text-emerald-700', emoji: '🆕' },
-  OFFER_ACCEPTED: { bg: 'bg-amber-100', text: 'text-amber-700', emoji: '⚡' },
-  COMPLETED: { bg: 'bg-blue-100', text: 'text-blue-700', emoji: '✅' }
+  NEW: { bg: 'bg-emerald-100', text: 'text-emerald-700', emoji: '🆕', label: "NEW" },
+  OFFER_ACCEPTED: { bg: 'bg-amber-100', text: 'text-amber-700', emoji: '⚡', label: "OFFER ACCEPTED" },
+  COMPLETED: { bg: 'bg-blue-100', text: 'text-blue-700', emoji: '✅', label: "COMPLETED" }
 };
- 
-export default function HomePage() {
+
+async function getTasks() {
+  try {
+    const { data } = await apolloClient.query<GetTaskListQuery>({
+      query: GET_TASK_LIST,
+      fetchPolicy: 'no-cache',  
+    });
+    return data?.taskList || [];
+  } catch (error) {
+    console.error('Error fetching tasks:', error);
+    return [];
+  }
+}
+
+
+export default async function HomePage() {
+  const tasks = await getTasks();
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
  
@@ -17,12 +35,12 @@ export default function HomePage() {
             Latest Tasks
           </h3>
           <div className="text-sm text-gray-500">
-            {mockTasks.length} available
+            {tasks.length} available
           </div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {mockTasks.map((task) => {
+          {tasks.map((task: Task) => {
             const statusStyle = statusConfig[task.status as keyof typeof statusConfig];
             return (
               <div 
@@ -33,7 +51,7 @@ export default function HomePage() {
                   <div className="flex items-center space-x-2"> 
                     <span className={`${statusStyle.bg} ${statusStyle.text} px-3 py-1 rounded-full text-sm font-medium flex items-center space-x-1`}>
                       <span>{statusStyle.emoji}</span>
-                      <span>{task.status.replace('_', ' ')}</span>
+                      <span>{statusStyle.label}</span>
                     </span>
                   </div>
                 </div>
