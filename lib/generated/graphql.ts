@@ -4892,3 +4892,18 @@ export type GetUserTasksQuery = {
     time_left?: string | null;
   } | null> | null;
 };
+
+export type LoginMutationVariables = Exact<{
+  email: Scalars["String"]["input"];
+  password: Scalars["String"]["input"];
+}>;
+
+export type LoginMutation = {
+  __typename?: "Mutation";
+  login?: {
+    __typename?: "CurrentUser";
+    isSuperAdmin?: boolean | null;
+    unReadMessages?: number | null;
+    user?: { __typename?: "User"; _id: any; email: string } | null;
+  } | null;
+};

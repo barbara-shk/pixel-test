@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 // Public task list (from API)
 export const GET_TASK_LIST = gql`
@@ -36,6 +36,20 @@ export const GET_USER_TASKS = gql`
       number_of_likes
       human_friendly_end_date
       time_left
+    }
+  }
+`;
+
+// Login mutation 
+export const LOGIN_MUTATION = gql`
+  mutation Login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      isSuperAdmin
+      unReadMessages
+      user {
+        _id
+        email
+      }
     }
   }
 `;
