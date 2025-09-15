@@ -21,6 +21,7 @@ export function TaskList({
 }: TaskListProps) {
   const selectId = useId();
   const [sortBy, setSortBy] = useState<SortBy>("default");
+  const [displayCount, setDisplayCount] = useState(20);
 
   const comparators: Record<
     Exclude<SortBy, "default">,
@@ -40,6 +41,10 @@ export function TaskList({
     if (sortBy === "default") return tasks;
     return [...tasks].sort(comparators[sortBy]);
   }, [tasks, sortBy]);
+ 
+  const visibleTasks = sortedTasks.slice(0, displayCount);
+  const remaining = sortedTasks.length - displayCount;
+  const showMoreIncrement = 20;
 
   const taskCountText = `${tasks.length} task${tasks.length === 1 ? "" : "s"} available`;
 
@@ -81,16 +86,38 @@ export function TaskList({
       </div>
 
       {sortedTasks.length > 0 ? (
-        <ul
-          className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
-          aria-label={`${sortedTasks.length} tasks displayed`}
-        >
-          {sortedTasks.map((task) => (
-            <li key={(task as any)._id ?? `${task.status}-${Math.random()}`}>
-              <TaskCard task={task} />
-            </li>
-          ))}
-        </ul>
+        <>
+          <ul
+            className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+            aria-label={`${visibleTasks.length} tasks displayed`}
+          >
+            {visibleTasks.map((task) => (
+              <li key={(task as any)._id ?? `${task.status}-${Math.random()}`}>
+                <TaskCard task={task} />
+              </li>
+            ))}
+          </ul>
+          
+          {remaining > 0 && (
+            <div className="mt-8 flex justify-center gap-4">
+              <button
+                onClick={() => setDisplayCount(prev => prev + showMoreIncrement)}
+                className="px-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              >
+                Show {Math.min(remaining, showMoreIncrement)} More
+              </button>
+              
+              {remaining > showMoreIncrement && (
+                <button
+                  onClick={() => setDisplayCount(sortedTasks.length)}
+                  className="px-6 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                >
+                  Show All ({remaining} remaining)
+                </button>
+              )}
+            </div>
+          )}
+        </>
       ) : (
         <div className="py-12 text-center" role="status" aria-live="polite">
           <div className="text-lg text-gray-500">{emptyMessage}</div>
