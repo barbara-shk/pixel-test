@@ -1,38 +1,9 @@
-import { apolloClient } from "@/src/lib/apollo-client";
-import { GetUserTasksQuery, Task } from "@/src/lib/generated/graphql";
-import { GET_USER_TASKS } from "@/src/lib/graphql/queries";
-import { Header } from "../components/Header";
-import { cookies } from "next/headers";
+ import { getUserTasks } from "@/src/lib/graphql/queries";
+import { Header } from "../components/Header";  
 import { TaskCard } from "../components/TaskCard";
 import { EmptyState } from "../components/EmptyState";
 import { ErrorState } from "../components/ErrorState";
 
-async function getUserTasks(): Promise<{ userTasks: Task[]; error?: string }> {
-  try {
-    const cookieStore = await cookies();
-    const authToken = cookieStore.get("auth-token");
-
-    if (!authToken) {
-      return { userTasks: [], error: "Not authenticated" };
-    }
-
-    const { data } = await apolloClient.query<GetUserTasksQuery>({
-      query: GET_USER_TASKS,
-      context: {
-        headers: {
-          Cookie: `auth-token=${authToken}`,
-        },
-      },
-      fetchPolicy: "no-cache",
-    });
-
-    const tasks = data?.getUserTasks?.filter(Boolean) || [];
-    return { userTasks: tasks as Task[] };
-  } catch (error) {
-    console.error("Error fetching user tasks:", error);
-    return { userTasks: [], error: "Failed to load tasks" };
-  }
-}
 
 export default async function AdminPage() {
   const { userTasks, error } = await getUserTasks();
@@ -56,7 +27,7 @@ export default async function AdminPage() {
             </div>
           </div>
 
-          {error && <ErrorState title="Failed to load tasks" message={error} />}
+          {error && <ErrorState title="Error" message={error} />}
 
           {!error && userTasks.length === 0 && (
             <EmptyState
