@@ -1,4 +1,4 @@
- import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 // Public task list (from API)
 export const GET_TASK_LIST = gql`

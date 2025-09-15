@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "codegen": "graphql-codegen --config codegen.ts",
-    "codegen:watch": "graphql-codegen --config codegen.ts --watch"
+    "codegen:watch": "graphql-codegen --config codegen.ts --watch",
+    "prettier": "prettier --write ."
   },
   "dependencies": {
     "@apollo/client": "^4.0.5",
