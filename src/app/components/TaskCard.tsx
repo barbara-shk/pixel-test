@@ -1,4 +1,4 @@
-import { Task } from "@/lib/generated/graphql";
+import { Task } from "@/src/lib/generated/graphql";
 
 const statusConfig = {
   NEW: {

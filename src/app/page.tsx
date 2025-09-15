@@ -1,6 +1,6 @@
-import { apolloClient } from "@/lib/apollo-client";
-import { GET_TASK_LIST } from "@/lib/graphql/queries";
-import { GetTaskListQuery, Task } from "../../lib/generated/graphql";
+import { apolloClient } from "@/src/lib/apollo-client";
+import { GET_TASK_LIST } from "@/src/lib/graphql/queries";
+import { GetTaskListQuery, Task } from "../lib/generated/graphql";
 import { TaskCard } from "./components/TaskCard";
 import { Header } from "./components/Header";
 

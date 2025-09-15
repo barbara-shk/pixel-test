@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 // Public task list (from API)
 export const GET_TASK_LIST = gql`
@@ -40,7 +40,7 @@ export const GET_USER_TASKS = gql`
   }
 `;
 
-// Login mutation 
+// Login mutation
 export const LOGIN_MUTATION = gql`
   mutation Login($email: String!, $password: String!) {
     login(email: $email, password: $password) {

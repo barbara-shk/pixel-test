@@ -1,46 +1,48 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     try {
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
       const result = await response.json();
 
       if (response.ok) {
-        router.push('/admin');
+        router.push("/admin");
       } else {
-        setError(result.error || 'Login failed');
+        setError(result.error || "Login failed");
       }
     } catch (err) {
-      setError('Something went wrong');
+      setError("Something went wrong");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center justify-center"> 
-        <div className="text-center mb-8"> 
-          <h1 className="text-2xl font-bold text-gray-900">Sign in to your account</h1>  
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center justify-center">
+      <div className="text-center mb-8">
+        <h1 className="text-2xl font-bold text-gray-900">
+          Sign in to your account
+        </h1>
         {error && (
           <div className="bg-red-100 text-red-700 p-3 rounded-lg mb-6 text-sm">
             {error}
@@ -81,13 +83,13 @@ export default function LoginPage() {
             disabled={loading}
             className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2.5 rounded-lg hover:shadow-lg transition-all duration-200 font-medium disabled:opacity-50"
           >
-            {loading ? 'Signing in...' : 'Sign In'}
+            {loading ? "Signing in..." : "Sign In"}
           </button>
         </form>
 
         <div className="text-center mt-6">
-          <Link 
-            href="/" 
+          <Link
+            href="/"
             className="text-indigo-600 hover:text-indigo-700 text-sm"
           >
             Back to Homepage
