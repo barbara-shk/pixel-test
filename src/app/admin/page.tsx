@@ -1,14 +1,22 @@
-import { requireAuth } from "@/src/lib/auth";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { getUserTasks } from "@/src/lib/graphql/queries";
 import { TaskCard } from "../components/ui/TaskCard";
 import { EmptyState } from "../components/ui/EmptyState";
 import { ErrorState } from "../components/ui/ErrorState";
 
 export default async function AdminPage() { 
-  const userId = await requireAuth();
+  const cookieStore = await cookies(); 
+  const authToken = cookieStore.get("auth-token");
+ 
+  if (!authToken) {
+    redirect("/login");
+  }
 
-  try {
-    const userTasks = await getUserTasks(userId);
+  try { 
+    const userId = authToken.value; 
+     
+    const userTasks = await getUserTasks(userId); 
 
     return (
       <div className="space-y-8">
@@ -50,8 +58,13 @@ export default async function AdminPage() {
       </div>
     );
   } catch (error) {
-    console.error("Error in admin page:", error);
-    
+    console.error("Error in admin page:", error); 
+    if (error instanceof Error && 
+        (error.message.includes("You must be logged") || 
+         error.message.includes("Authentication required"))) {
+      redirect("/login");
+    }
+
     return (
       <div className="space-y-8">
         <div className="mb-8">

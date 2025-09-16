@@ -25,7 +25,7 @@ export default function LoginPage() {
 
       const result = await response.json();
 
-      if (response.ok && result.success) { 
+      if (response.ok && result.success) {
         router.push("/admin");
       } else {
         setError(result.error || "Login failed");
@@ -49,7 +49,7 @@ export default function LoginPage() {
         </div>
 
         {error && (
-          <div 
+          <div
             className="bg-red-100 text-red-700 p-3 rounded-lg mb-6 text-sm"
             role="alert"
             aria-live="polite"
@@ -60,7 +60,7 @@ export default function LoginPage() {
 
         <form onSubmit={handleLogin} className="space-y-6" noValidate>
           <div>
-            <label 
+            <label
               htmlFor="email"
               className="block text-sm font-medium text-gray-700 mb-2"
             >
@@ -79,7 +79,7 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <label 
+            <label
               htmlFor="password"
               className="block text-sm font-medium text-gray-700 mb-2"
             >

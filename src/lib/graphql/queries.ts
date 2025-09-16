@@ -39,7 +39,7 @@ export const GET_TASK_LIST = gql`
   }
 `;
 
-// User's tasks 
+// User's tasks
 export const GET_USER_TASKS = gql`
   query GetUserTasks($user_id: ID!) {
     getUserTasks(user_id: $user_id) {
@@ -97,27 +97,26 @@ export async function getUserTasks(userId: string): Promise<Task[]> {
     const { data } = await apolloClient.query<GetUserTasksQuery>({
       query: GET_USER_TASKS,
       variables: {
-        user_id: userId, 
+        user_id: userId,
       },
-            context: {
+      context: {
         headers: {
           // Not sure what is expected for authorisation here
           // But using userId as a placeholder for jwt or token
-          Authorization: `Bearer ${userId}`, 
+          Authorization: `Bearer ${userId}`,
         },
       },
       fetchPolicy: "no-cache",
     });
 
     const tasks = data?.getUserTasks?.filter(Boolean) || [];
-    return tasks as Task[]; 
+    return tasks as Task[];
   } catch (error: any) {
     console.error("Error fetching user tasks:", error);
-     
+
     throw error;
   }
 }
-
 
 // Login function
 export async function loginUser(
