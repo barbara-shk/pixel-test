@@ -2,7 +2,7 @@
 
 import { useMemo, useId, useState } from "react";
 import type { Task } from "@/src/lib/generated/graphql";
-import { TaskCard } from "./TaskCard";
+import { TaskCard } from "./ui/TaskCard";
 
 type SortBy = "default" | "status-az" | "status-za";
 

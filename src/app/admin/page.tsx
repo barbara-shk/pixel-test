@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useAuth } from "../components/AuthProvider";
-import { TaskCard } from "../components/TaskCard";
-import { EmptyState } from "../components/EmptyState";
-import { ErrorState } from "../components/ErrorState";
-import { LoadingState } from "../components/LoadingState";
+import { useAuth } from "../components/auth/AuthProvider";
+import { TaskCard } from "../components/ui/TaskCard";
+import { EmptyState } from "../components/ui/EmptyState";
+import { ErrorState } from "../components/ui/ErrorState";
+import { LoadingState } from "../components/ui/LoadingState";
 import type { Task } from "@/src/lib/generated/graphql";
 import { getUserTasks } from "@/src/lib/graphql/queries";
 

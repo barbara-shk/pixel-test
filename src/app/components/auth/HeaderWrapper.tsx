@@ -1,6 +1,6 @@
 "use client";
 
-import { Header } from "./Header";
+import { Header } from "../ui/Header";
 import { useAuth } from "./AuthProvider";
 
 export function HeaderWrapper() {

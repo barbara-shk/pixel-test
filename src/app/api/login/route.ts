@@ -7,8 +7,6 @@ export async function POST(request: NextRequest) {
   try {
     // Extract email/password from request body
     const { email, password }: MutationLoginArgs = await request.json();
-
-    // Call GraphQL login mutation
     const { data } = await apolloClient.mutate<
       LoginMutation,
       MutationLoginArgs
@@ -18,9 +16,8 @@ export async function POST(request: NextRequest) {
     });
 
     // Check if login was successful and user data exists
-    // Note: the user has been created on the apollo sandbox
+    // Note: I've created my own user on apollo sandbox
     if (data?.login?.user) {
-      // Extract user info from nested GraphQL response
       const userData = {
         id: data.login.user._id,
         email: data.login.user.email,
