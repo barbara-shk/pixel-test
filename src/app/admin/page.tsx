@@ -1,5 +1,4 @@
- import { getUserTasks } from "@/src/lib/graphql/queries";
-import { Header } from "../components/Header";  
+ import { getUserTasks } from "@/src/lib/graphql/queries"; 
 import { TaskCard } from "../components/TaskCard";
 import { EmptyState } from "../components/EmptyState";
 import { ErrorState } from "../components/ErrorState";
@@ -9,8 +8,7 @@ export default async function AdminPage() {
   const { userTasks, error } = await getUserTasks();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
-      <Header />
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50"> 
       <main className="max-w-7xl mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
