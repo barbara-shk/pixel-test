@@ -10,19 +10,12 @@ export function ErrorState({
   onRetry,
 }: ErrorStateProps) {
   return (
-    <div 
-      className="text-center py-12"
-      role="alert"
-      aria-live="assertive"
-    >
+    <div className="text-center py-12" role="alert" aria-live="assertive">
       <h2 className="text-lg font-medium text-red-700 mb-2">
         <span className="sr-only">Error occurred: </span>
         {title}
       </h2>
-      <p 
-        className="text-gray-500 mb-4"
-        id="error-description"
-      >
+      <p className="text-gray-500 mb-4" id="error-description">
         {message}
       </p>
       {onRetry && (

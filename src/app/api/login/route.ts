@@ -1,10 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { apolloClient } from "@/src/lib/apollo-client";
 import { LOGIN_MUTATION } from "@/src/lib/graphql/queries";
-import {
-  LoginMutation,
-  MutationLoginArgs,
-} from "@/src/lib/generated/graphql";
+import { LoginMutation, MutationLoginArgs } from "@/src/lib/generated/graphql";
 
 export async function POST(request: NextRequest) {
   try {

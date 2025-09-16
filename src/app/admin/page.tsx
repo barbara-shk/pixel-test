@@ -5,7 +5,7 @@ import { useAuth } from "../components/AuthProvider";
 import { TaskCard } from "../components/TaskCard";
 import { EmptyState } from "../components/EmptyState";
 import { ErrorState } from "../components/ErrorState";
-import { LoadingState } from "../components/LoadingState"; 
+import { LoadingState } from "../components/LoadingState";
 import type { Task } from "@/src/lib/generated/graphql";
 import { getUserTasks } from "@/src/lib/graphql/queries";
 
@@ -18,26 +18,26 @@ export default function AdminPage() {
   useEffect(() => {
     async function fetchUserTasks() {
       if (!isAuthenticated) return;
-      
+
       try {
         setLoading(true);
         setError(null);
 
-        const token = localStorage.getItem('authToken');
+        const token = localStorage.getItem("authToken");
         if (!token) {
-          setError('No authentication token found');
+          setError("No authentication token found");
           return;
         }
 
         const result = await getUserTasks(token);
-        
+
         if (result.error) {
           setError(result.error);
         } else {
           setUserTasks(result.userTasks);
         }
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Something went wrong');
+        setError(err instanceof Error ? err.message : "Something went wrong");
       } finally {
         setLoading(false);
       }
@@ -75,17 +75,12 @@ export default function AdminPage() {
           <h2 className="text-xl font-semibold text-gray-800">My Tasks</h2>
           {!error && (
             <div className="text-sm text-gray-500">
-              {userTasks.length} task{userTasks.length === 1 ? '' : 's'}
+              {userTasks.length} task{userTasks.length === 1 ? "" : "s"}
             </div>
           )}
         </div>
 
-        {error && (
-          <ErrorState 
-            title="Failed to Load Tasks" 
-            message={error}
-          />
-        )}
+        {error && <ErrorState title="Failed to Load Tasks" message={error} />}
 
         {!error && userTasks.length === 0 && (
           <EmptyState
@@ -100,9 +95,9 @@ export default function AdminPage() {
             {userTasks.map((task) => {
               if (!task) return null;
               return (
-                <TaskCard 
-                  key={task._id || `task-${Math.random()}`} 
-                  task={task} 
+                <TaskCard
+                  key={task._id || `task-${Math.random()}`}
+                  task={task}
                 />
               );
             })}

@@ -41,7 +41,7 @@ export function TaskList({
     if (sortBy === "default") return tasks;
     return [...tasks].sort(comparators[sortBy]);
   }, [tasks, sortBy]);
- 
+
   const visibleTasks = sortedTasks.slice(0, displayCount);
   const remaining = sortedTasks.length - displayCount;
   const showMoreIncrement = 20;
@@ -97,16 +97,18 @@ export function TaskList({
               </li>
             ))}
           </ul>
-          
+
           {remaining > 0 && (
             <div className="mt-8 flex justify-center gap-4">
               <button
-                onClick={() => setDisplayCount(prev => prev + showMoreIncrement)}
+                onClick={() =>
+                  setDisplayCount((prev) => prev + showMoreIncrement)
+                }
                 className="px-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
                 Show {Math.min(remaining, showMoreIncrement)} More
               </button>
-              
+
               {remaining > showMoreIncrement && (
                 <button
                   onClick={() => setDisplayCount(sortedTasks.length)}

@@ -18,8 +18,8 @@ export function Header({ isAuthenticated = false, onLogout }: HeaderProps) {
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
           {/* Logo and Brand */}
-          <Link 
-            href="/" 
+          <Link
+            href="/"
             className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
             aria-label="TaskApp home"
           >

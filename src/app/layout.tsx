@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google"; 
-import { AuthProvider } from "./components/AuthProvider"; 
+import { Geist, Geist_Mono } from "next/font/google";
+import { AuthProvider } from "./components/AuthProvider";
 import "./globals.css";
 import { HeaderWrapper } from "./components/HeaderWrapper";
 
@@ -16,7 +16,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "TaskApp - Manage Your Tasks Efficiently",
-  description: "A modern task management application built with Next.js and GraphQL",
+  description:
+    "A modern task management application built with Next.js and GraphQL",
 };
 
 export default function RootLayout({
@@ -32,9 +33,7 @@ export default function RootLayout({
         <AuthProvider>
           <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
             <HeaderWrapper />
-            <main className="max-w-7xl mx-auto px-4 py-8">
-              {children}
-            </main>
+            <main className="max-w-7xl mx-auto px-4 py-8">{children}</main>
           </div>
         </AuthProvider>
       </body>
