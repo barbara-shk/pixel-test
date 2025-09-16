@@ -39,10 +39,10 @@ export const GET_TASK_LIST = gql`
   }
 `;
 
-// User's tasks
+// User's tasks 
 export const GET_USER_TASKS = gql`
-  query GetUserTasks {
-    getUserTasks {
+  query GetUserTasks($user_id: ID!) {
+    getUserTasks(user_id: $user_id) {
       _id
       title
       description
@@ -87,53 +87,37 @@ export async function getTaskList() {
   }
 }
 
-// Get user tasks (with token)
-export async function getUserTasks(
-  token?: string,
-): Promise<{ userTasks: Task[]; error?: string }> {
+// Get user tasks (with userId)
+export async function getUserTasks(userId: string): Promise<Task[]> {
   try {
-    if (!token) {
-      return { userTasks: [], error: "Please log in to view your tasks" };
+    if (!userId) {
+      throw new Error("User ID is required");
     }
-    // Authorization header does not seem to work with the sandbox API
-    // but we include it here for completeness
+
     const { data } = await apolloClient.query<GetUserTasksQuery>({
       query: GET_USER_TASKS,
-      context: {
+      variables: {
+        user_id: userId, 
+      },
+            context: {
         headers: {
-          Authorization: `Bearer ${token}`,
+          // Not sure what is expected for authorisation here
+          // But using userId as a placeholder for jwt or token
+          Authorization: `Bearer ${userId}`, 
         },
       },
       fetchPolicy: "no-cache",
     });
 
     const tasks = data?.getUserTasks?.filter(Boolean) || [];
-    return { userTasks: tasks as Task[] };
+    return tasks as Task[]; 
   } catch (error: any) {
     console.error("Error fetching user tasks:", error);
-
-    if (
-      error.message?.includes("unauthorized") ||
-      error.message?.includes("401")
-    ) {
-      return { userTasks: [], error: "Session expired. Please log in again." };
-    }
-
-    if (error.networkError) {
-      return {
-        userTasks: [],
-        error: "Connection failed. Check your internet and try again.",
-      };
-    }
-
-    if (error.graphQLErrors?.length > 0) {
-      const gqlError = error.graphQLErrors[0];
-      return { userTasks: [], error: `Server error: ${gqlError.message}` };
-    }
-
-    return { userTasks: [], error: "Failed to load tasks. Please try again." };
+     
+    throw error;
   }
 }
+
 
 // Login function
 export async function loginUser(

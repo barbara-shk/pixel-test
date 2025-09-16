@@ -5,8 +5,8 @@ import { LoginMutation, MutationLoginArgs } from "@/src/lib/generated/graphql";
 
 export async function POST(request: NextRequest) {
   try {
-    // Extract email/password from request body
     const { email, password }: MutationLoginArgs = await request.json();
+
     const { data } = await apolloClient.mutate<
       LoginMutation,
       MutationLoginArgs
@@ -15,42 +15,54 @@ export async function POST(request: NextRequest) {
       variables: { email, password },
     });
 
-    // Check if login was successful and user data exists
-    // Note: I've created my own user on apollo sandbox
     if (data?.login?.user) {
       const userData = {
         id: data.login.user._id,
         email: data.login.user.email,
-        isSuperAdmin: data.login.isSuperAdmin,
-        unReadMessages: data.login.unReadMessages,
+        isSuperAdmin: data.login.isSuperAdmin ?? false,
+        unReadMessages: data.login.unReadMessages ?? 0,
       };
 
-      // Create successful response with user data
       const response = NextResponse.json({
         success: true,
         user: userData,
       });
 
-      // Set HTTP-only cookie for authentication
+      // Set HTTP-only authentication cookie
       response.cookies.set("auth-token", data.login.user._id, {
-        httpOnly: true, // Can't be accessed by JavaScript
-        sameSite: "lax", // CSRF protection
+        httpOnly: true,
+        sameSite: "lax",
         maxAge: 60 * 60 * 24 * 7, // 7 days
+        path: "/",
       });
 
       return response;
-    } else {
-      // Login failed - invalid credentials
+    }
+
+    return NextResponse.json(
+      { success: false, error: "Invalid credentials" },
+      { status: 401 },
+    );
+  } catch (error: any) {
+    console.error("Login error:", error);
+
+    if (error.graphQLErrors?.length > 0) {
+      const gqlError = error.graphQLErrors[0];
       return NextResponse.json(
-        { error: "Invalid credentials" },
-        { status: 401 },
+        { success: false, error: gqlError.message },
+        { status: 400 },
       );
     }
-  } catch (error) {
-    // Handle GraphQL errors or network issues
-    console.error("Login error:", error);
+
+    if (error.networkError) {
+      return NextResponse.json(
+        { success: false, error: "Network error. Please try again." },
+        { status: 503 },
+      );
+    }
+
     return NextResponse.json(
-      { error: "Login failed, please check your credentials" },
+      { success: false, error: "Login failed. Please try again." },
       { status: 500 },
     );
   }
