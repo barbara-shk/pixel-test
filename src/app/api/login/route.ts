@@ -3,6 +3,16 @@ import { apolloClient } from "@/src/lib/apollo-client";
 import { LOGIN_MUTATION } from "@/src/lib/graphql/queries";
 import { LoginMutation, MutationLoginArgs } from "@/src/lib/generated/graphql";
 
+/**
+ * Login API Route - Handles user authentication
+ * 
+ * Flow:
+ * 1. Extract email/password from request body
+ * 2. Send GraphQL login mutation to external API
+ * 3. If successful, set HTTP-only auth cookie with user ID (should be token in real app)
+ * 4. Return user data to client (for UI state)
+ * 5. Handle various error scenarios with appropriate status codes
+ */
 export async function POST(request: NextRequest) {
   try {
     const { email, password }: MutationLoginArgs = await request.json();

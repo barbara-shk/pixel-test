@@ -16,6 +16,7 @@ interface AuthContextType {
   loading: boolean;
 }
 
+// AuthContext is currently only used for UI state management, not data fetching
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 interface AuthProviderProps {
@@ -27,18 +28,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const pathname = usePathname();
-
-  // Check if user is authenticated on mount
+ 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     if (token) {
-      // In a real app, you'd validate the token with your API
+      // In a real app, we would verify the token here
       setIsAuthenticated(true);
     }
     setLoading(false);
   }, []);
-
-  // Protect admin routes
+  
   useEffect(() => {
     if (!loading && pathname?.startsWith("/admin") && !isAuthenticated) {
       router.push("/login");
