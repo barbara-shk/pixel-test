@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Task Management App
 
-## Getting Started
+A Next.js application that consumes a GraphQL API to display and manage tasks with user authentication.
 
-First, run the development server:
+## Features
 
+- **Public Task List**: Browse all available tasks
+- **User Authentication**: Login with email/password
+- **Admin Dashboard**: View personal tasks after authentication
+- **Client-Side Sorting**: Sort tasks by status (A-Z, Z-A)
+- **Responsive Design**: Works on desktop and mobile devices
+
+## Tech Stack
+
+- **Framework**: Next.js 14 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **GraphQL**: Apollo Client
+- **Authentication**: HTTP-only cookies
+
+## Prerequisites
+
+- Node.js 18+ 
+- npm or yarn
+
+## Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone git@github.com:barbara-shk/pixel-test.git
+cd pixel-task-app
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Create environment file:
+```bash
+cp .env.example .env.local
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Add your GraphQL endpoint to `.env.local`:
+```
+NEXT_PUBLIC_GRAPHQL_URL=https://asktask-api.stagelab.co.uk/graphql
+```
 
-## Learn More
+## Running the Application
 
-To learn more about Next.js, take a look at the following resources:
+1. Start the development server:
+```bash
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Usage
 
-## Deploy on Vercel
+1. **Browse Tasks**: Visit the homepage to view all public tasks
+2. **Login**: Click "Login" and enter your credentials
+3. **View Your Tasks**: After login, access the admin dashboard to see your personal tasks
+4. **Sort Tasks**: Use the dropdown to sort tasks by status
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## API Integration
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The application connects to a GraphQL API with these main operations:
+
+- `taskList`: Fetches all public tasks
+- `login`: Authenticates users
+- `getUserTasks`: Fetches user-specific tasks (requires authentication)
+
+## Architecture
+
+- **Server-Side Rendering**: All data fetching occurs server-side per requirements
+- **Authentication**: Secure HTTP-only cookies for session management
+- **Type Safety**: Generated GraphQL types for full type safety
+
+## Project Structure
+
+```
+src/
+├── app/                 # Next.js app router pages
+├── components/          # Reusable UI components
+├── lib/                 # Utilities and GraphQL setup
+└── styles/             # Global styles
+```
+
+## Development Notes
+
+- All data fetching is server-side only (no client-side API calls)
+- Authentication uses HTTP-only cookies for security
+- Error handling implemented for network and GraphQL errors
+- Responsive design with mobile-first approach

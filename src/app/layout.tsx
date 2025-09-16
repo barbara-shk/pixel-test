@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { AuthProvider } from "./components/auth/AuthProvider";
+import { AuthProvider } from "../components/auth/AuthProvider";
 import "./globals.css";
-import { HeaderWrapper } from "./components/auth/HeaderWrapper";
+import { HeaderWrapper } from "../components/auth/HeaderWrapper";
 import { ReactNode } from "react";
 
 const geistSans = Geist({

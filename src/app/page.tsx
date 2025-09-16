@@ -1,7 +1,7 @@
-import { TaskList } from "./components/ui/TaskList";
-import { ErrorState } from "./components/ui/ErrorState";
-import { EmptyState } from "./components/ui/EmptyState";
-import { getTaskList } from "../lib/graphql/queries";
+import { TaskList } from "@/src/components/ui/TaskList";
+import { ErrorState } from "@/src/components/ui/ErrorState";
+import { EmptyState } from "@/src/components/ui/EmptyState";
+import { getTaskList } from "@/src/lib/graphql/queries";
 
 export default async function HomePage() {
   try {

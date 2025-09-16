@@ -1,9 +1,9 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { getUserTasks } from "@/src/lib/graphql/queries";
-import { TaskCard } from "../components/ui/TaskCard";
-import { EmptyState } from "../components/ui/EmptyState";
-import { ErrorState } from "../components/ui/ErrorState";
+import { TaskCard } from "@/src/components/ui/TaskCard";
+import { EmptyState } from "@/src/components/ui/EmptyState";
+import { ErrorState } from "@/src/components/ui/ErrorState";
 
 export default async function AdminPage() { 
   const cookieStore = await cookies(); 
