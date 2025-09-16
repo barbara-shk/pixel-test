@@ -1,17 +1,7 @@
 "use client";
 
 import { useId } from "react";
-import { type Task } from "@/src/lib/generated/graphql"; 
-import { SortBy } from "./types";
-
-interface TaskListHeaderProps {
-  title: string;
-  taskCountText: string;
-  showCount: boolean;
-  tasksLength: number;
-  sortBy: SortBy;
-  onSortChange: (sortBy: SortBy) => void;
-}
+import { SortBy, TaskListHeaderProps } from "./types";
 
 export function TaskListHeader({
   title,

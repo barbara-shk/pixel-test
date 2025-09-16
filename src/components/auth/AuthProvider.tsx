@@ -28,7 +28,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const pathname = usePathname();
- 
+
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     if (token) {
@@ -37,7 +37,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
     setLoading(false);
   }, []);
-  
+
   useEffect(() => {
     if (!loading && pathname?.startsWith("/admin") && !isAuthenticated) {
       router.push("/login");

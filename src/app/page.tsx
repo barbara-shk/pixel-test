@@ -1,6 +1,6 @@
 import { ErrorState } from "@/src/components/ui/ErrorState";
 import { EmptyState } from "@/src/components/ui/EmptyState";
-import { getTaskList } from "@/src/lib/graphql/queries"; 
+import { getTaskList } from "@/src/lib/graphql/queries";
 import { TaskList } from "../components/taskList";
 
 export default async function HomePage() {

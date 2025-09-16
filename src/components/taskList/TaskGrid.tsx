@@ -1,12 +1,7 @@
 "use client";
 
-import { type Task, EnumTaskStatus } from "@/src/lib/generated/graphql";
 import { TaskCard } from "./TaskCard";
-
-interface TaskGridProps {
-  tasks: Task[];
-  onStatusClick: (status: EnumTaskStatus) => void;
-}
+import { TaskGridProps } from "./types";
 
 export function TaskGrid({ tasks, onStatusClick }: TaskGridProps) {
   return (
@@ -16,10 +11,7 @@ export function TaskGrid({ tasks, onStatusClick }: TaskGridProps) {
     >
       {tasks.map((task) => (
         <li key={task._id ?? `${task.status}-${Math.random()}`}>
-          <TaskCard 
-            task={task} 
-            onStatusClick={onStatusClick}
-          />
+          <TaskCard task={task} onStatusClick={onStatusClick} />
         </li>
       ))}
     </ul>

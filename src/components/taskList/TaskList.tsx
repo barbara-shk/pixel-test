@@ -1,12 +1,11 @@
 "use client";
 
-import { type Task } from "@/src/lib/generated/graphql";
 import { statusConfig } from "./TaskCard";
 import { useTaskFiltering } from "../hooks/useTaskFiltering";
 import { TaskListHeader } from "./TaskListHeader";
 import { StatusFilterButtons } from "./StatusFilterButtons";
 import { TaskGrid } from "./TaskGrid";
-import { LoadMoreButtons } from "./LoadMoreButtons"; 
+import { LoadMoreButtons } from "./LoadMoreButtons";
 import type { TaskListProps } from "./types";
 import { EmptyState } from "../ui/EmptyState";
 
@@ -16,22 +15,22 @@ export function TaskList({
   showCount = true,
   emptyMessage = "No tasks available",
 }: TaskListProps) {
-  const { 
+  const {
     selectedStatus,
     sortBy,
     setSortBy,
     statusCounts,
-    availableStatuses, 
+    availableStatuses,
     visibleTasks,
     totalFiltered,
-    remainingCount, 
+    remainingCount,
     handleStatusFilter,
     handleShowMore,
     handleShowAll,
   } = useTaskFiltering(tasks);
 
   // Create the accessible count text for the header
-  const taskCountText = selectedStatus 
+  const taskCountText = selectedStatus
     ? `${totalFiltered} task${totalFiltered === 1 ? "" : "s"} with status "${statusConfig[selectedStatus].label}"`
     : `${tasks.length} task${tasks.length === 1 ? "" : "s"} available`;
 
@@ -58,10 +57,7 @@ export function TaskList({
 
       {totalFiltered > 0 ? (
         <>
-          <TaskGrid 
-            tasks={visibleTasks}
-            onStatusClick={handleStatusFilter}
-          />
+          <TaskGrid tasks={visibleTasks} onStatusClick={handleStatusFilter} />
 
           <LoadMoreButtons
             remaining={remainingCount}
@@ -71,11 +67,8 @@ export function TaskList({
           />
         </>
       ) : (
-        <EmptyState
-          title={title}
-          description={emptyMessage}
-        />
+        <EmptyState title={title} description={emptyMessage} />
       )}
     </section>
   );
-} 
+}

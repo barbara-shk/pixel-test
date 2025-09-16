@@ -1,15 +1,7 @@
 "use client";
 
-import { EnumTaskStatus } from "@/src/lib/generated/graphql"; 
 import { statusConfig } from "./TaskCard";
-
-interface StatusFilterButtonsProps {
-  availableStatuses: EnumTaskStatus[];
-  statusCounts: Record<EnumTaskStatus, number>;
-  selectedStatus: EnumTaskStatus | null;
-  totalTasks: number;
-  onStatusFilter: (status: EnumTaskStatus | null) => void;
-}
+import { StatusFilterButtonsProps } from "./types";
 
 export function StatusFilterButtons({
   availableStatuses,
@@ -21,24 +13,28 @@ export function StatusFilterButtons({
   if (availableStatuses.length <= 1) return null;
 
   return (
-    <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filter tasks by status">
+    <div
+      className="flex flex-wrap items-center gap-2"
+      role="group"
+      aria-label="Filter tasks by status"
+    >
       <button
         onClick={() => onStatusFilter(null)}
         className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
           selectedStatus === null
-            ? 'bg-gray-800 text-white shadow-md'
-            : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-sm'
+            ? "bg-gray-800 text-white shadow-md"
+            : "bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-sm"
         }`}
         aria-pressed={selectedStatus === null}
       >
         All Tasks ({totalTasks})
       </button>
-      
+
       {availableStatuses.map((status) => {
         const config = statusConfig[status];
         const count = statusCounts[status];
         const isSelected = selectedStatus === status;
-        
+
         return (
           <button
             key={status}

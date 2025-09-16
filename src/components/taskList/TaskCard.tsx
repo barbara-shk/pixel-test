@@ -28,10 +28,10 @@ const UNKNOWN_STATUS_STYLE = {
   label: "UNKNOWN",
 } as const;
 
-const StatusBadge = ({ 
-  status, 
-  onStatusClick 
-}: { 
+const StatusBadge = ({
+  status,
+  onStatusClick,
+}: {
   status?: EnumTaskStatus;
   onStatusClick?: (status: EnumTaskStatus) => void;
 }) => {
@@ -51,7 +51,7 @@ const StatusBadge = ({
     return (
       <button
         onClick={(e) => {
-          e.stopPropagation(); 
+          e.stopPropagation();
           onStatusClick(status);
         }}
         className={`${baseClasses} transition-all duration-200 hover:shadow-md hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer`}
@@ -63,11 +63,7 @@ const StatusBadge = ({
     );
   }
 
-  return (
-    <div className={baseClasses}>
-      {badgeContent}
-    </div>
-  );
+  return <div className={baseClasses}>{badgeContent}</div>;
 };
 
 const RemoteBadge = () => (
@@ -200,10 +196,10 @@ const TaskMeta = ({ createdAt }: { createdAt?: Task["createdAt"] }) => {
   );
 };
 
-export const TaskCard = ({ 
-  task, 
-  onStatusClick 
-}: { 
+export const TaskCard = ({
+  task,
+  onStatusClick,
+}: {
   task: Task;
   onStatusClick?: (status: EnumTaskStatus) => void;
 }) => {

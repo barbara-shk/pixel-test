@@ -1,11 +1,6 @@
 "use client";
 
-interface LoadMoreButtonsProps {
-  remaining: number;
-  showMoreIncrement: number;
-  onShowMore: () => void;
-  onShowAll: () => void;
-}
+import { LoadMoreButtonsProps } from "./types";
 
 export function LoadMoreButtons({
   remaining,

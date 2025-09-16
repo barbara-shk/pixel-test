@@ -5,7 +5,7 @@ import { LoginMutation, MutationLoginArgs } from "@/src/lib/generated/graphql";
 
 /**
  * Login API Route - Handles user authentication
- * 
+ *
  * Flow:
  * 1. Extract email/password from request body
  * 2. Send GraphQL login mutation to external API
