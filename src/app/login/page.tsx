@@ -17,6 +17,7 @@ export default function LoginPage() {
     setError("");
 
     try {
+      // Call API route that handles GraphQL and sets cookies
       const response = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -26,6 +27,7 @@ export default function LoginPage() {
       const result = await response.json();
 
       if (response.ok) {
+        // Cookie is set by the API route, just redirect
         router.push("/admin");
       } else {
         setError(result.error || "Login failed");
@@ -38,11 +40,15 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center justify-center">
-      <div className="text-center mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">
-          Sign in to your account
-        </h1>
+    <div className="min-h-[60vh] flex items-center justify-center">
+      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
+        <div className="text-center mb-8">
+          <h1 className="text-2xl font-bold text-gray-900">
+            Sign in to your account
+          </h1>
+          <p className="text-gray-600 mt-2">Access your personal dashboard</p>
+        </div>
+
         {error && (
           <div className="bg-red-100 text-red-700 p-3 rounded-lg mb-6 text-sm">
             {error}
@@ -81,7 +87,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2.5 rounded-lg hover:shadow-lg transition-all duration-200 font-medium disabled:opacity-50"
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-lg transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? "Signing in..." : "Sign In"}
           </button>
@@ -92,7 +98,7 @@ export default function LoginPage() {
             href="/"
             className="text-indigo-600 hover:text-indigo-700 text-sm"
           >
-            Back to Homepage
+            ← Back to Homepage
           </Link>
         </div>
       </div>

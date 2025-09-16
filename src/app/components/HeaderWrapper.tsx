@@ -1,0 +1,15 @@
+"use client";
+
+import { Header } from "./Header";
+import { useAuth } from "./AuthProvider";
+
+export function HeaderWrapper() {
+  const { isAuthenticated, logout } = useAuth();
+
+  return (
+    <Header 
+      isAuthenticated={isAuthenticated} 
+      onLogout={logout}
+    />
+  );
+}
