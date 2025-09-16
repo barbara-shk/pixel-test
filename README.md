@@ -20,28 +20,32 @@ A Next.js application that consumes a GraphQL API to display and manage tasks wi
 
 ## Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - npm or yarn
 
 ## Installation
 
 1. Clone the repository:
+
 ```bash
 git clone git@github.com:barbara-shk/pixel-test.git
 cd pixel-task-app
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Create environment file:
+
 ```bash
 cp .env.example .env.local
 ```
 
 4. Add your GraphQL endpoint to `.env.local`:
+
 ```
 NEXT_PUBLIC_GRAPHQL_URL=https://asktask-api.stagelab.co.uk/graphql
 ```
@@ -49,6 +53,7 @@ NEXT_PUBLIC_GRAPHQL_URL=https://asktask-api.stagelab.co.uk/graphql
 ## Running the Application
 
 1. Start the development server:
+
 ```bash
 npm run dev
 ```

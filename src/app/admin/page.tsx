@@ -5,18 +5,18 @@ import { TaskCard } from "@/src/components/ui/TaskCard";
 import { EmptyState } from "@/src/components/ui/EmptyState";
 import { ErrorState } from "@/src/components/ui/ErrorState";
 
-export default async function AdminPage() { 
-  const cookieStore = await cookies(); 
+export default async function AdminPage() {
+  const cookieStore = await cookies();
   const authToken = cookieStore.get("auth-token");
- 
+
   if (!authToken) {
     redirect("/login");
   }
 
-  try { 
-    const userId = authToken.value; 
-     
-    const userTasks = await getUserTasks(userId); 
+  try {
+    const userId = authToken.value;
+
+    const userTasks = await getUserTasks(userId);
 
     return (
       <div className="space-y-8">
@@ -58,10 +58,12 @@ export default async function AdminPage() {
       </div>
     );
   } catch (error) {
-    console.error("Error in admin page:", error); 
-    if (error instanceof Error && 
-        (error.message.includes("You must be logged") || 
-         error.message.includes("Authentication required"))) {
+    console.error("Error in admin page:", error);
+    if (
+      error instanceof Error &&
+      (error.message.includes("You must be logged") ||
+        error.message.includes("Authentication required"))
+    ) {
       redirect("/login");
     }
 
@@ -73,10 +75,10 @@ export default async function AdminPage() {
           </h1>
           <p className="text-gray-600">Manage your personal tasks</p>
         </div>
-        
-        <ErrorState 
-          title="Failed to Load Tasks" 
-          message="Unable to fetch your tasks. Please try refreshing the page." 
+
+        <ErrorState
+          title="Failed to Load Tasks"
+          message="Unable to fetch your tasks. Please try refreshing the page."
         />
       </div>
     );
