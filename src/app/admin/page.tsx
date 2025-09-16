@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { getUserTasks } from "@/src/lib/graphql/queries";
-import { TaskCard } from "@/src/components/ui/TaskCard";
+import { TaskCard } from "@/src/components/taskList/TaskCard";
 import { EmptyState } from "@/src/components/ui/EmptyState";
 import { ErrorState } from "@/src/components/ui/ErrorState";
 

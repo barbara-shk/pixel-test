@@ -1,6 +1,6 @@
 import { EnumTaskStatus, Task } from "@/src/lib/generated/graphql";
 
-const statusConfig = {
+export const statusConfig = {
   [EnumTaskStatus.New]: {
     bg: "bg-gradient-to-r from-emerald-50 to-emerald-100",
     text: "text-emerald-800",
@@ -28,15 +28,44 @@ const UNKNOWN_STATUS_STYLE = {
   label: "UNKNOWN",
 } as const;
 
-const StatusBadge = ({ status }: { status?: EnumTaskStatus }) => {
+const StatusBadge = ({ 
+  status, 
+  onStatusClick 
+}: { 
+  status?: EnumTaskStatus;
+  onStatusClick?: (status: EnumTaskStatus) => void;
+}) => {
   const statusStyle = status ? statusConfig[status] : UNKNOWN_STATUS_STYLE;
+  const isClickable = status && onStatusClick;
 
-  return (
-    <div
-      className={`${statusStyle.bg} ${statusStyle.text} px-3 py-1.5 rounded-lg text-sm font-semibold inline-flex items-center space-x-2 shadow-sm`}
-    >
+  const badgeContent = (
+    <>
       <span className="sr-only">Task status: </span>
       <span aria-hidden="false">{statusStyle.label}</span>
+    </>
+  );
+
+  const baseClasses = `${statusStyle.bg} ${statusStyle.text} px-3 py-1.5 rounded-lg text-sm font-semibold inline-flex items-center space-x-2 shadow-sm`;
+
+  if (isClickable) {
+    return (
+      <button
+        onClick={(e) => {
+          e.stopPropagation(); 
+          onStatusClick(status);
+        }}
+        className={`${baseClasses} transition-all duration-200 hover:shadow-md hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer`}
+        title={`Filter by ${statusStyle.label} status`}
+        aria-label={`Filter tasks by ${statusStyle.label} status`}
+      >
+        {badgeContent}
+      </button>
+    );
+  }
+
+  return (
+    <div className={baseClasses}>
+      {badgeContent}
     </div>
   );
 };
@@ -51,12 +80,14 @@ const RemoteBadge = () => (
 const TaskHeader = ({
   status,
   isRemote,
+  onStatusClick,
 }: {
   status?: EnumTaskStatus;
   isRemote?: Task["is_remote"];
+  onStatusClick?: (status: EnumTaskStatus) => void;
 }) => (
   <div className="flex justify-between items-start mb-4">
-    <StatusBadge status={status} />
+    <StatusBadge status={status} onStatusClick={onStatusClick} />
     {isRemote && <RemoteBadge />}
   </div>
 );
@@ -169,7 +200,13 @@ const TaskMeta = ({ createdAt }: { createdAt?: Task["createdAt"] }) => {
   );
 };
 
-export const TaskCard = ({ task }: { task: Task }) => {
+export const TaskCard = ({ 
+  task, 
+  onStatusClick 
+}: { 
+  task: Task;
+  onStatusClick?: (status: EnumTaskStatus) => void;
+}) => {
   const statusStyle = task.status
     ? statusConfig[task.status]
     : UNKNOWN_STATUS_STYLE;
@@ -185,6 +222,7 @@ export const TaskCard = ({ task }: { task: Task }) => {
         <TaskHeader
           status={task.status ?? undefined}
           isRemote={task.is_remote || false}
+          onStatusClick={onStatusClick}
         />
 
         <TaskTitle title={task.title} taskId={task._id} />
