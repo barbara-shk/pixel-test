@@ -91,7 +91,7 @@ export function TaskList({
             aria-label={`${visibleTasks.length} tasks displayed`}
           >
             {visibleTasks.map((task) => (
-              <li key={(task as any)._id ?? `${task.status}-${Math.random()}`}>
+              <li key={task._id ?? `${task.status}-${Math.random()}`}>
                 <TaskCard task={task} />
               </li>
             ))}
